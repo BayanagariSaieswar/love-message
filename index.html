@@ -2,33 +2,15 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Love Message</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Love Greeting Card</title>
   <style>
     body {
       margin: 0;
       padding: 0;
-      background: linear-gradient(to top right, #ffe6e6, #fff);
-      font-family: Arial, sans-serif;
+      background: linear-gradient(to top right, #ffe6f0, #fff0f5);
+      font-family: 'Segoe UI', sans-serif;
       overflow: hidden;
-    }
-
-    .heart-box {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -50%);
-      width: 300px;
-      height: 300px;
-      background: red;
-      clip-path: path("M 150 270 C 70 200, 20 140, 70 80 C 110 30, 150 60, 150 100 C 150 60, 190 30, 230 80 C 280 140, 230 200, 150 270 Z");
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 24px;
-      text-align: center;
-      box-shadow: 0 0 20px rgba(0, 0, 0, 0.2);
     }
 
     .birds {
@@ -39,7 +21,7 @@
       height: 100%;
       pointer-events: none;
       background: url('https://i.gifer.com/4A1P.gif') repeat-x;
-      background-size: contain;
+      background-size: 300px;
       animation: fly 60s linear infinite;
       opacity: 0.5;
     }
@@ -48,12 +30,135 @@
       from { background-position-x: 100%; }
       to { background-position-x: -100%; }
     }
+
+    .container {
+      position: relative;
+      text-align: center;
+      padding-top: 50px;
+      z-index: 1;
+    }
+
+    .heart {
+      width: 200px;
+      height: 180px;
+      background-color: red;
+      margin: 0 auto;
+      position: relative;
+      transform: rotate(-45deg);
+    }
+
+    .heart::before,
+    .heart::after {
+      content: "";
+      width: 200px;
+      height: 180px;
+      background-color: red;
+      border-radius: 50%;
+      position: absolute;
+    }
+
+    .heart::before {
+      top: -100px;
+      left: 0;
+    }
+
+    .heart::after {
+      left: 100px;
+      top: 0;
+    }
+
+    .message {
+      position: absolute;
+      top: 40%;
+      left: 50%;
+      transform: translate(-50%, -50%) rotate(45deg);
+      color: white;
+      font-size: 22px;
+    }
+
+    .scene {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin: 60px auto;
+      max-width: 500px;
+      height: 100px;
+      padding: 20px;
+      position: relative;
+      background: #fff8fc;
+      border-radius: 20px;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    }
+
+    .boy, .girl {
+      font-size: 40px;
+      transition: all 0.5s ease;
+    }
+
+    .girl {
+      position: relative;
+    }
+
+    .rose {
+      font-size: 30px;
+      display: none;
+      position: absolute;
+      top: -10px;
+      left: -30px;
+      transform: rotate(-30deg);
+    }
+
+    .controls {
+      margin-top: 20px;
+    }
+
+    .btn {
+      padding: 10px 25px;
+      background-color: #ff4da6;
+      color: white;
+      font-size: 16px;
+      border: none;
+      border-radius: 20px;
+      cursor: pointer;
+    }
   </style>
 </head>
 <body>
   <div class="birds"></div>
-  <div class="heart-box">
-    I love you Kannu ❤️
+
+  <div class="container">
+    <div class="heart">
+      <div class="message">I love you Kannu ❤️</div>
+    </div>
+
+    <div class="scene">
+      <div id="boy" class="boy" style="margin-left: 0;">👦</div>
+      <div class="girl">
+        👧
+        <div id="rose" class="rose">🌹</div>
+      </div>
+    </div>
+
+    <div class="controls">
+      <button class="btn" onclick="moveBoy()">Tap to Continue 💖</button>
+    </div>
   </div>
+
+  <script>
+    let step = 0;
+    const boy = document.getElementById('boy');
+    const rose = document.getElementById('rose');
+
+    function moveBoy() {
+      step++;
+      const maxSteps = 5;
+      const movePercent = Math.min(step, maxSteps) * 15;
+      boy.style.marginLeft = movePercent + '%';
+
+      if (step >= maxSteps) {
+        rose.style.display = 'block';
+      }
+    }
+  </script>
 </body>
 </html>
