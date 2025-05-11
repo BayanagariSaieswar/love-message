@@ -3,198 +3,145 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Love Surprise</title>
+  <title>I Love You Kannu</title>
   <style>
     body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(to right, #ff0066, #ff3399);
+      overflow: hidden;
       font-family: 'Segoe UI', sans-serif;
-      background: linear-gradient(to right, #fff0f5, #ffe6f0);
-      text-align: center;
-      padding: 20px;
-      overflow-x: hidden;
+      animation: fadeIn 3s ease;
     }
 
-    .hidden { display: none; }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
 
-    input {
-      padding: 10px;
-      margin: 10px;
-      font-size: 16px;
-      border: 2px solid #ff66b2;
-      border-radius: 10px;
+    .container {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      height: 100vh;
+      color: white;
+    }
+
+    h1 {
+      font-size: 4.5em;
+      font-weight: bold;
+      margin: 0;
+      animation: glow 2s infinite alternate;
+      text-shadow: 3px 3px 10px rgba(0,0,0,0.3);
+    }
+
+    @keyframes glow {
+      from {
+        text-shadow: 0 0 10px #fff, 0 0 20px #ff3399, 0 0 30px #ff3399;
+      }
+      to {
+        text-shadow: 0 0 20px #fff, 0 0 30px #ff99cc, 0 0 40px #ff66cc;
+      }
+    }
+
+    .heart {
+      position: absolute;
+      width: 25px;
+      height: 25px;
+      background: url('https://cdn-icons-png.flaticon.com/512/833/833472.png') no-repeat center;
+      background-size: contain;
+      animation: float 10s linear infinite;
+      opacity: 0.7;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(100vh) rotate(0deg);
+        opacity: 0.3;
+      }
+      100% {
+        transform: translateY(-100vh) rotate(360deg);
+        opacity: 0.9;
+      }
+    }
+
+    audio {
+      display: none;
+    }
+
+    .button-container {
+      margin-top: 30px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
     }
 
     button {
-      padding: 10px 20px;
-      margin: 10px;
-      background: #ff4da6;
-      color: white;
+      padding: 12px 25px;
       font-size: 16px;
       border: none;
-      border-radius: 20px;
+      border-radius: 25px;
+      background-color: white;
+      color: #ff3399;
       cursor: pointer;
+      font-weight: bold;
+      box-shadow: 0px 5px 15px rgba(255, 0, 102, 0.3);
+      transition: all 0.3s ease;
     }
 
-    #roseBtn {
-      font-size: 40px;
-      background: transparent;
-      border: none;
-      animation: pulse 1s infinite;
-      margin-top: 30px;
-    }
-
-    @keyframes pulse {
-      0% { transform: scale(1); }
-      50% { transform: scale(1.2); }
-      100% { transform: scale(1); }
-    }
-
-    #letter {
-      font-size: 100px;
-      cursor: pointer;
-      margin: 30px 0;
-    }
-
-    .love-card {
-      background: red;
+    button:hover {
+      background-color: #ff99cc;
       color: white;
-      font-size: 20px;
-      padding: 20px;
-      border-radius: 20px;
-      max-width: 400px;
-      margin: 20px auto;
-    }
-
-    .scene {
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      font-size: 40px;
-      margin-top: 40px;
-      transition: all 0.8s ease;
-    }
-
-    .boy, .girl {
-      transition: transform 1s;
-    }
-
-    .exchange {
-      font-size: 30px;
-      opacity: 0;
-      transition: opacity 1s ease;
     }
   </style>
 </head>
 <body>
 
-  <!-- Step 1: Ask Name -->
-  <div id="step1">
-    <h2>Hi dear! What's your name? 💖</h2>
-    <input type="text" id="nameInput" placeholder="Enter your name" />
-    <br />
-    <button onclick="askDOB()">Next</button>
-  </div>
-
-  <!-- Step 2: Ask DOB -->
-  <div id="step2" class="hidden">
-    <h2>When is your birthday, <span id="displayName"></span>? 🎂</h2>
-    <input type="date" id="dobInput" />
-    <br />
-    <button onclick="showCountdown()">Show Time Left</button>
-  </div>
-
-  <!-- Step 3: Show Countdown -->
-  <div id="step3" class="hidden">
-    <h2 id="countdownText"></h2>
-    <button id="roseBtn" onclick="showLetter()">🌹</button>
-    <p>Click the rose! I have some interesting news to update with you.</p>
-  </div>
-
-  <!-- Step 4: Show Letter -->
-  <div id="letterSection" class="hidden">
-    <div id="letter" onclick="showLoveCard()">💌</div>
-    <p>Click the letter to open my heart!</p>
-  </div>
-
-  <!-- Step 5: Love Message Card -->
-  <div id="loveCard" class="hidden">
-    <div class="love-card">
-      I love you so much, Kannu. My eyes are waiting for you...<br><br>
-      ❤️ Love you, Kannu ❤️
+  <div class="container">
+    <h1>I Love You Kannu 💖</h1>
+    <div class="button-container">
+      <button onclick="playMusic()">🎵 Play Background Music</button>
+      <button onclick="playVoice()">💌 Tap to Hear Voice Note</button>
+      <button onclick="restartPage()">💞 Restart Love</button>
     </div>
-    <button onclick="startExchange()">Click to feel the magic 💞</button>
   </div>
 
-  <!-- Final Scene: Boy meets Girl -->
-  <div id="finalScene" class="hidden">
-    <div class="scene">
-      <div class="boy" id="boy">👦</div>
-      <div class="girl" id="girl">👧</div>
-    </div>
-    <div class="exchange" id="exchange">💞 Love is exchanged 💞</div>
-  </div>
+  <!-- Background Love Music -->
+  <audio id="loveMusic" autoplay loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+    Your browser does not support the audio tag.
+  </audio>
 
+  <!-- Voice Note -->
+  <audio id="voiceNote">
+    <source src="https://www2.cs.uic.edu/~i101/SoundFiles/StarWars60.wav" type="audio/wav">
+    <!-- Replace above link with your real voice note MP3/WAV -->
+  </audio>
+
+  <!-- Floating Hearts -->
   <script>
-    let userName = "";
-
-    function askDOB() {
-      userName = document.getElementById("nameInput").value;
-      if (!userName) {
-        alert("Please enter your name!");
-        return;
-      }
-      document.getElementById("step1").classList.add("hidden");
-      document.getElementById("displayName").innerText = userName;
-      document.getElementById("step2").classList.remove("hidden");
+    for (let i = 0; i < 35; i++) {
+      const heart = document.createElement("div");
+      heart.className = "heart";
+      heart.style.left = `${Math.random() * 100}vw`;
+      heart.style.animationDuration = `${4 + Math.random() * 6}s`;
+      document.body.appendChild(heart);
     }
 
-    function showCountdown() {
-      const dob = new Date(document.getElementById("dobInput").value);
-      if (!dob || isNaN(dob)) {
-        alert("Please enter a valid date!");
-        return;
-      }
-
-      const now = new Date();
-      const nextBirthday = new Date(now.getFullYear(), dob.getMonth(), dob.getDate());
-      if (now > nextBirthday) {
-        nextBirthday.setFullYear(now.getFullYear() + 1);
-      }
-
-      const diff = nextBirthday - now;
-      const days = Math.floor(diff / (1000 * 60 * 60 * 24));
-      const hours = Math.floor((diff / (1000 * 60 * 60)) % 24);
-      const minutes = Math.floor((diff / (1000 * 60)) % 60);
-
-      document.getElementById("step2").classList.add("hidden");
-      document.getElementById("countdownText").innerText =
-        `Hey ${userName}, only ${days} days, ${hours} hours, and ${minutes} minutes left for your birthday! 🎉`;
-
-      document.getElementById("step3").classList.remove("hidden");
+    function playMusic() {
+      document.getElementById("loveMusic").play();
     }
 
-    function showLetter() {
-      document.getElementById("step3").classList.add("hidden");
-      document.getElementById("letterSection").classList.remove("hidden");
+    function playVoice() {
+      document.getElementById("voiceNote").play();
     }
 
-    function showLoveCard() {
-      document.getElementById("letterSection").classList.add("hidden");
-      document.getElementById("loveCard").classList.remove("hidden");
-    }
-
-    function startExchange() {
-      document.getElementById("loveCard").classList.add("hidden");
-      document.getElementById("finalScene").classList.remove("hidden");
-
-      setTimeout(() => {
-        document.getElementById("boy").style.transform = "translateX(100px)";
-        document.getElementById("girl").style.transform = "translateX(-100px)";
-      }, 1000);
-
-      setTimeout(() => {
-        document.getElementById("exchange").style.opacity = 1;
-      }, 2000);
+    function restartPage() {
+      location.reload();
     }
   </script>
+
 </body>
 </html>
